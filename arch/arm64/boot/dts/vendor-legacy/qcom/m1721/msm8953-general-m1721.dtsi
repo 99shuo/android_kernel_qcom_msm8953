@@ -339,15 +339,9 @@
             compatible = "awinic,aw36413";
             label = "awinic,aw36413";
             qcom,flash-type = <1>;
-            gpios = <&tlmm 95 0>,
-					<&tlmm 93 0>, 
-					<&tlmm 96 0>;
-            qcom,gpio-flash-en = <0>;
-            qcom,gpio-flash-en-2 = <1>;
-            qcom,gpio-flash-strobe = <2>;
-            qcom,gpio-req-tbl-num = <0 1 2>;
-            qcom,gpio-req-tbl-flags = <0 0 0>;
-            qcom,gpio-req-tbl-label = "FLASH_EN", "FLASH_EN_2", "FLASH_STROBE";
+            hwen1-gpios = <&tlmm 95 0>;
+            hwen2-gpios = <&tlmm 93 0>;
+            strobe-gpios = <&tlmm 96 0>;
         };
         
         aw2013@45 {
