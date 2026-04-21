@@ -1,16 +1,3 @@
-/*
- * Copyright (c) 2017, The Linux Foundation. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 and
- * only version 2 as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- */
-
 &dai_pri_auxpcm {
     /delete-property/ qcom,msm-cpudai-afe-clk-ver;
 };
@@ -32,6 +19,50 @@
 };
 
 &soc {
+	i2c@7af8000 { /* BLSP2 QUP4 */
+		status = "ok";
+
+		// For stability...?
+		qcom,disable-dma;
+
+        cs35l35@40 {
+			compatible = "cirrus,cs35l35";
+			reg = <0x40>;
+			reset-gpio = <&tlmm 91 0>;
+			irq-gpio = <&tlmm 90 1>;
+			interrupt-parent = <&tlmm>;
+			interrupts = <90 8>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&cs35l35_default &cs35l35_irq_default>;
+			cirrus,audio-channel = <0>;
+			cirrus,boost-ind-nanohenry = <1200>;
+			status = "ok";
+
+			cirrus,classh-internal-algo {
+				cirrus,classh-bst-overide;
+				cirrus,classh-bst-max-limit = <0x1>;
+				cirrus,classh-mem-depth = <0x1>;
+				cirrus,classh-release-rate = <0x3>;
+				cirrus,classh-headroom = <0x8>;
+				cirrus,classh-wk-fet-disable = <0x0>;
+				cirrus,classh-wk-fet-delay = <0x4>;
+				cirrus,classh-wk-fet-thld = <0x1>;
+				cirrus,classh-vpch-auto = <0x1>;
+				cirrus,classh-vpch-rate = <0x2>;
+				cirrus,classh-vpch-man = <0x5>;
+			};
+
+			cirrus,monitor-signal-format {
+				cirrus,imon = /bits/ 8 <0x03 0x00 0x01>;
+				cirrus,vmon = /bits/ 8 <0x03 0x00 0x00>;
+				cirrus,vpmon = /bits/ 8 <0x00 0x04 0x00>;
+				cirrus,vbstmon = /bits/ 8 <0x00 0x04 0x01>;
+				cirrus,vpbrstat = /bits/ 8 <0x00 0x04 0x00>;
+				cirrus,zerofill = /bits/ 8 <0x00 0x00 0x00>;
+			};
+		};
+	};
+
 	cdc_quat_mi2s_gpios: msm_cdc_pinctrl_quat {
 		compatible = "qcom,msm-cdc-pinctrl";
 		pinctrl-names = "aud_active", "aud_sleep";
