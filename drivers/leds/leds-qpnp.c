@@ -22,7 +22,7 @@
 #include <linux/of_device.h>
 #include <linux/spmi.h>
 #include <linux/platform_device.h>
-#include <linux/qpnp/pwm-legacy.h>
+#include <linux/qpnp/pwm.h>
 #include <linux/workqueue.h>
 #include <linux/delay.h>
 #include <linux/regulator/consumer.h>
